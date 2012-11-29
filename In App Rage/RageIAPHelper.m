@@ -16,8 +16,8 @@
     dispatch_once(&once, ^{
         //在这里输入你在应用里添加的书籍的product_ID
         NSSet * productIdentifiers = [NSSet setWithObjects:
-                                      @"com.xxxxx.oooooooo",
-                                      @"com.xxxxx.oooooooo2",
+                                      @"com.xinhuapinmei.xinhuatupianbao.testbook3",
+                                      @"com.xinhuapinmei.xinhuatupianbao.testbook4",
                                       nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });
