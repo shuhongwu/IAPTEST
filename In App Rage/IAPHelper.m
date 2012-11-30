@@ -55,6 +55,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         }
         
         // Add self as transaction observer
+        //去除ARC后，此处retain一次，防止访问已经回收的那段内存
+        [_purchasedProductIdentifiers retain];
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
         
     }

@@ -67,7 +67,7 @@
     [self.tableView reloadData];
     [[RageIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
-            _products = products;
+            _products = [[NSArray alloc] initWithArray:products];
             [self.tableView reloadData];
         }
         [self.refreshControl endRefreshing];
