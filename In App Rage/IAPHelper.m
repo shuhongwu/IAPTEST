@@ -192,6 +192,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 }
 */
 
+//Receipt data must be base64 encoded before being passed to the validation server.
 
 - (NSString *)encode:(const uint8_t *)input length:(NSInteger)length {
     static char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
