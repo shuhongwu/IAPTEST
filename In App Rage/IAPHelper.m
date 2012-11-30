@@ -9,6 +9,9 @@
 // 1
 #import "IAPHelper.h"
 #import <StoreKit/StoreKit.h>
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+#import "JSON.h"
 
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 
@@ -16,6 +19,13 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 @interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
 
+//2_two
+/*
+@interface IAPHelper (Internal)
+- (BOOL)verifyReceipt:(SKPaymentTransaction *)transaction;
+- (NSString *)encode:(const uint8_t *)input length:(NSInteger)length;
+@end
+*/
 // 3
 @implementation IAPHelper {
     SKProductsRequest * _productsRequest;
@@ -133,8 +143,77 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     NSLog(@"completeTransaction...");
     
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
+    NSString *jsonObjectString = [self encode:(uint8_t *)transaction.transactionReceipt.bytes length:transaction.transactionReceipt.length];
+    NSString *completeString = [NSString stringWithFormat:@"http://192.168.226.104/index.php?receipt=%@", jsonObjectString];
+    NSURL *url = [NSURL URLWithString:completeString];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setDelegate:self];
+    [request startAsynchronous];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
+
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    
+    NSString *responseString = [request responseString];
+    NSLog(@"responseString.......%@",responseString);
+    // Use when fetching binary data
+    NSData *responseData = [request responseData];
+
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    
+}
+
+
+/*
+- (BOOL)verifyReceipt:(SKPaymentTransaction *)transaction {
+    NSString *jsonObjectString = [self encode:(uint8_t *)transaction.transactionReceipt.bytes length:transaction.transactionReceipt.length];
+    NSString *completeString = [NSString stringWithFormat:@"http://url-for-your-php?receipt=%@", jsonObjectString];
+    NSURL *urlForValidation = [NSURL URLWithString:completeString];
+    NSMutableURLRequest *validationRequest = [[NSMutableURLRequest alloc] initWithURL:urlForValidation];
+    [validationRequest setHTTPMethod:@"GET"];
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:validationRequest returningResponse:nil error:nil];
+    NSString *responseString = [[NSString alloc] initWithData:responseData encoding: NSUTF8StringEncoding];
+    NSInteger response = [responseString integerValue];
+    return (response == 0);
+}
+*/
+
+
+- (NSString *)encode:(const uint8_t *)input length:(NSInteger)length {
+    static char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    
+    NSMutableData *data = [NSMutableData dataWithLength:((length + 2) / 3) * 4];
+    uint8_t *output = (uint8_t *)data.mutableBytes;
+    
+    for (NSInteger i = 0; i < length; i += 3) {
+        NSInteger value = 0;
+        for (NSInteger j = i; j < (i + 3); j++) {
+            value <<= 8;
+            
+            if (j < length) {
+                value |= (0xFF & input[j]);
+            }
+        }
+        
+        NSInteger index = (i / 3) * 4;
+        output[index + 0] =                    table[(value >> 18) & 0x3F];
+        output[index + 1] =                    table[(value >> 12) & 0x3F];
+        output[index + 2] = (i + 1) < length ? table[(value >> 6)  & 0x3F] : '=';
+        output[index + 3] = (i + 2) < length ? table[(value >> 0)  & 0x3F] : '=';
+    }
+    
+    return [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+}
+
+
+
+
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
     NSLog(@"restoreTransaction...");

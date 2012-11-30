@@ -91,6 +91,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
     SKProduct * product = (SKProduct *) _products[indexPath.row];
+    [product retain];
     cell.textLabel.text = product.localizedTitle;
     [_priceFormatter setLocale:product.priceLocale];
     cell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];
