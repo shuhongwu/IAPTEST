@@ -114,6 +114,7 @@
 		FA36B59E166880EB005EB6D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FA36B5A0166880F2005EB6D1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		FA36B5A21668810F005EB6D1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		FA36B5C2166896BE005EB6D1 /* validateaction.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = validateaction.php; sourceTree = SOURCE_ROOT; };
 		FA9146381665D9A000C69AF4 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FA9146391665D9A000C69AF4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,6 +195,7 @@
 		35E66AC515F7EAE200F253ED /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA36B5C2166896BE005EB6D1 /* validateaction.php */,
 				FA9146381665D9A000C69AF4 /* Icon.png */,
 				FA9146391665D9A000C69AF4 /* Icon@2x.png */,
 				35E66AC615F7EAE200F253ED /* In App Rage-Info.plist */,
