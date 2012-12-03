@@ -63,11 +63,11 @@
  
     try {
          if(strpos($receipt,'{'))
-{
-$receipt = base64_encode($receipt);
-}
-        $info = validateReceipt($receipt, $isSandbox);
-		echo 'Success';
+         {
+           $receipt = base64_encode($receipt);
+         }
+           $info = validateReceipt($receipt, $isSandbox);
+		   echo 'Success';
  		//echo $info;
     }
     catch (Exception $ex) {
