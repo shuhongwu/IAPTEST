@@ -148,7 +148,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     NSString *jsonObjectString = [self encode:(uint8_t *)transaction.transactionReceipt.bytes length:transaction.transactionReceipt.length];
     NSLog(@"发送string......%@",jsonObjectString);
     //可以在后面追加一个字符故意造成receipt不正确，然后看看返回值，一般都是:Status Code: 21002
-    NSString *completeString = [NSString stringWithFormat:@"http://192.168.226.104/validateaction.php?receipt=%@", jsonObjectString];
+    NSString *completeString = [NSString stringWithFormat:@"http://192.168.226.86/validateaction.php?receipt=%@", jsonObjectString];
     NSURL *url = [NSURL URLWithString:completeString];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setDelegate:self];
